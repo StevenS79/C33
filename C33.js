@@ -1,0 +1,90 @@
+const Engine = Matter.Engine;
+const World = Matter.World;
+const Bodies = Matter.Bodies;
+
+var blocks1,blocks2,blocks3,blocks4,blocks5,blocks6,blocks7,blocks8,blocks9,blocks10;
+var engine, world;
+var ground;
+var particles = [];
+var plinkos = [];
+var divisions = [];
+var divisionHeight = 150;
+function setup() {
+  createCanvas(450,600);
+  engine = Engine.create();
+  world = engine.world;
+
+  ground = new Ground(225,590,width,20);
+
+  for(var k=0; k<=width; k=k+80){
+    divisions.push(new Divisions(k,height-divisionHeight/2,10,divisionHeight));
+  }
+
+  for (var j = 75; j <=width; j=j+50) 
+    {    
+       plinkos.push(new Plinko(j,55));
+    }
+
+    for (var j = 50; j <=width-10; j=j+50) 
+    {    
+       plinkos.push(new Plinko(j,155));
+    }
+
+    for (var j = 75; j <=width; j=j+50) 
+    {    
+       plinkos.push(new Plinko(j,255));
+    }
+
+     for (var j = 50; j <=width-10; j=j+50) 
+    {    
+       plinkos.push(new Plinko(j,355));
+    }
+
+}
+
+function draw() {
+  background(0);  
+  Engine.update(engine);
+  ground.display();
+
+  for (var i = 0; i < plinkos.length; i++) {
+    plinkos[i].display();    
+  }
+
+  if(frameCount%90===0){
+    particles.push(new Particle(random(width/2-30, width/2+30), 10,8));
+  }
+
+ for (var j = 0; j < particles.length; j++) {
+  
+    particles[j].display();
+  }
+
+  for(var k=0; k<divisions.length; k++){
+    divisions[k].display();
+  }
+  text("Score : "+score,750,40);
+  blocks1.score();
+  blocks2.score();
+  blocks3.score();
+  blocks4.score();
+  blocks5.score();
+  blocks6.score();
+  blocks7.score();
+  blocks8.score();
+  blocks9.score();
+  blocks10.score();
+}
+
+function score(){
+    if(this.visibility<0 && this.visibility >-105){
+        score++;
+    }
+}
+
+function mousePressed()
+{
+  count++;
+  particle=new Particle(mouseX,10,10,10);
+}
+}
